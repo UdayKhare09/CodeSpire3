@@ -1,0 +1,14 @@
+.vscode/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.venv/
+.idea/
+.ipynb_checkpoints/
+logs/
+src/.env
+src/__pycache__/
+src/chunks.json
+src/embeddings.npz
+src/human-nutrition-text.pdf
