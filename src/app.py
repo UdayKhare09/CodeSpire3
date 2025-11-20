@@ -3,7 +3,6 @@ from typing import List
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from src import utils
@@ -66,7 +65,3 @@ def search(q: str, top_k: int = 10):
     items = [utils.pages_and_chunks[i] for i in indices]
     return {"query": q, "results": items, "scores": [float(s) for s in scores]}
 
-
-# Serve simple frontend
-static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static")
-app.mount("/", StaticFiles(directory=static_path, html=True), name="static")
