@@ -7,3 +7,4 @@ pymupdf
 numpy
 transformers
 google-genai
+pyjwt

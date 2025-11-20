@@ -7,8 +7,20 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': {
+      '/api/ask': {
         target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/api/search': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/api/v1/auth': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+      },
+      '/api/v1/auth/mfa': {
+        target: 'http://127.0.0.1:8080',
         changeOrigin: true,
       }
     }

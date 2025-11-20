@@ -64,4 +64,3 @@ def search(q: str, top_k: int = 10):
     scores, indices = utils.retrieve_relevant_resources(q, top_k=top_k)
     items = [utils.pages_and_chunks[i] for i in indices]
     return {"query": q, "results": items, "scores": [float(s) for s in scores]}
-

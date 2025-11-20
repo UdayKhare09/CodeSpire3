@@ -1,14 +1,17 @@
 import { useEffect, useRef } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useAuth } from './context/AuthContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Layout() {
   const lenisRef = useRef<Lenis | null>(null);
   const location = useLocation();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -34,15 +37,28 @@ export default function Layout() {
     lenisRef.current?.scrollTo(0, { immediate: true });
   }, [location.pathname]);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="min-h-screen flex flex-col font-sans text-zinc-900 bg-white selection:bg-zinc-900 selection:text-white">
       <header className="fixed top-0 left-0 right-0 z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-white">
         <Link to="/" className="text-xl font-bold tracking-tighter hover:opacity-70 transition-opacity">
           RAG.
         </Link>
-        <nav className="flex gap-6 text-sm font-medium">
+        <nav className="flex gap-6 text-sm font-medium items-center">
           <Link to="/" className="hover:underline underline-offset-4">Home</Link>
           <Link to="/about" className="hover:underline underline-offset-4">About</Link>
+          {isAuthenticated ? (
+            <>
+              <Link to="/profile" className="hover:underline underline-offset-4">Profile</Link>
+              <button onClick={handleLogout} className="hover:underline underline-offset-4">Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="hover:underline underline-offset-4">Login</Link>
+          )}
         </nav>
       </header>
 
